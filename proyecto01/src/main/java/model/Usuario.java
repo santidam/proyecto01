@@ -5,9 +5,11 @@
 package model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
-import java.util.List;
+import javax.validation.constraints.*;
+
 
 @Entity
 public class Usuario {
@@ -15,13 +17,23 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre;
+    
+    @Email(message = "El correo electrónico debe ser válido")
+    @NotBlank(message = "El correo es obligatorio")
     private String correo;
+    
+    @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 6, message = "La contraseña debe tener al menos 6 caracteres")
     private String contrasena;
-
+    
+    @JsonIgnore  // Evita la serialización infinita
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Actividad> actividades;
-
+    
+    @JsonIgnore  // Evita la serialización infinita
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Recompensa> recompensas;
 

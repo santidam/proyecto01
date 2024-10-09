@@ -6,6 +6,7 @@ package model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 
 @Entity
 public class Promocion {
@@ -13,8 +14,11 @@ public class Promocion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "La descripción es obligatoria")
     private String descripcion;
+    @FutureOrPresent(message = "La fecha de inicio debe ser hoy o en el futuro")
     private LocalDate fechaInicio;
+    @FutureOrPresent(message = "La fecha de fin debe ser hoy o en el futuro")
     private LocalDate fechaFin;
 
     @ManyToOne

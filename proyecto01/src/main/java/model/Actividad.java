@@ -6,6 +6,7 @@ package model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 
 @Entity
 public class Actividad {
@@ -13,6 +14,7 @@ public class Actividad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "El tipo de actividad es obligatorio")
     private String tipo;
     private LocalDate fecha;
 

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import javax.validation.Valid;
 import model.Pyme;
 
 @RestController
@@ -24,7 +25,7 @@ public class PymeController {
     }
 
     @PostMapping("/registro")
-    public Pyme registrarPyme(@RequestBody Pyme pyme) {
+    public Pyme registrarPyme(@Valid@RequestBody Pyme pyme) {
         return pymeRepository.save(pyme);
     }
 }

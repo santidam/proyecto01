@@ -5,8 +5,10 @@
 package model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
+import javax.validation.constraints.*;
 
 @Entity
 public class Pyme {
@@ -14,10 +16,16 @@ public class Pyme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    @NotBlank(message = "El nombre de la PYME es obligatorio")
     private String nombre;
+    
+    @Size(max = 500, message = "La descripción no debe exceder los 500 caracteres")
     private String descripcion;
+    
     private String direccion;
-
+    
+    @JsonIgnore
     @OneToMany(mappedBy = "pyme", cascade = CascadeType.ALL)
     private List<Promocion> promociones;
 

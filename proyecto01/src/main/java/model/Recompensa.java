@@ -4,6 +4,7 @@
  */
 package model;
 import jakarta.persistence.*;
+import javax.validation.constraints.*;
 
 @Entity
 public class Recompensa {
@@ -11,7 +12,9 @@ public class Recompensa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "La descripción es obligatoria")
     private String descripcion;
+    @NotBlank(message = "Las condiciones son obligatorias")
     private String condiciones;
 
     @ManyToOne

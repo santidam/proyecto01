@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.proyecto01.proyecto01", "model", "dao", "controller"})
+@ComponentScan(basePackages = {"com.proyecto01.proyecto01", "model", "dao", "controller", "com.proyecto01.proyecto01.exceptions"})
 @EnableJpaRepositories(basePackages = {"dao"})
 @EntityScan(basePackages = {"model"})  // Asegúrate de incluir este escaneo de entidades
 public class Proyecto01Application {

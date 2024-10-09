@@ -16,6 +16,7 @@ import javax.validation.Valid;
 import model.Usuario;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -25,13 +26,8 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     @PostMapping("/registro")
-    public ResponseEntity<?> registrarUsuario(@Valid @RequestBody Usuario usuario, BindingResult result) {
-        if (result.hasErrors()) {
-            Map<String, String> errores = result.getFieldErrors().stream()
-                .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
-            return ResponseEntity.badRequest().body(errores);
-        }
-
+   public ResponseEntity<?> registrarUsuario(@Valid @RequestBody Usuario usuario) {
+        // Verificación de correo duplicado
         if (usuarioRepository.findByCorreo(usuario.getCorreo()).isPresent()) {
             return ResponseEntity.badRequest().body("El correo ya está en uso");
         }
@@ -39,8 +35,6 @@ public class UsuarioController {
         Usuario nuevoUsuario = usuarioRepository.save(usuario);
         return ResponseEntity.ok(nuevoUsuario);
     }
-
-
 
     @GetMapping("/{id}")
     public ResponseEntity<Usuario> obtenerUsuario(@PathVariable Long id) {

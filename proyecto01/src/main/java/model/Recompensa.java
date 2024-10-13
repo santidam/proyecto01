@@ -4,7 +4,7 @@
  */
 package model;
 import jakarta.persistence.*;
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Recompensa {

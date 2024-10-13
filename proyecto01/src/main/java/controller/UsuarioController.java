@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import model.Usuario;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -28,9 +28,16 @@ public class UsuarioController {
     @PostMapping("/registro")
    public ResponseEntity<?> registrarUsuario(@Valid @RequestBody Usuario usuario) {
         // Verificación de correo duplicado
+//        if (usuario.getCorreo().trim().equals("") || usuario.getCorreo().isEmpty()) {
+//            return ResponseEntity.badRequest().body("Introduce un correo valido");
+//        }
+//        if (usuario.getNombre().trim().equals("") || usuario.getNombre().isEmpty()) {
+//            return ResponseEntity.badRequest().body("Introduce un nombre valido");
+//        }
         if (usuarioRepository.findByCorreo(usuario.getCorreo()).isPresent()) {
             return ResponseEntity.badRequest().body("El correo ya está en uso");
         }
+        
 
         Usuario nuevoUsuario = usuarioRepository.save(usuario);
         return ResponseEntity.ok(nuevoUsuario);

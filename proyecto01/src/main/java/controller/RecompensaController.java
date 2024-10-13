@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import model.Actividad;
 import model.Recompensa;
 import model.Usuario;

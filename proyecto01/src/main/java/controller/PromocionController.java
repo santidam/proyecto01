@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import dao.PromocionRepository;
 import dao.PymeRepository;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
 import java.util.List;
 import java.util.Map;

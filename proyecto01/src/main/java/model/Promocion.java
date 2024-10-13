@@ -6,7 +6,7 @@ package model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
-import javax.validation.constraints.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 public class Promocion {

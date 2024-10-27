@@ -48,9 +48,9 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Recompensa> recompensas;
     
-    private int intentosFallidos = 0;
+    private int intentosFallidos;
 
-    private boolean bloqueado = false;
+    private boolean bloqueado;
 
     // Getters y Setters
 

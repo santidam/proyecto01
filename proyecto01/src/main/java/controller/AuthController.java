@@ -78,6 +78,7 @@ public class AuthController {
             
             registrarInicioSesion(authRequest.getCorreo(),"FALLIDO", "Credenciales incorrectas", request);
             
+            System.out.println(usuario.isBloqueado());
             if (usuario.isBloqueado()) {
                 return ResponseEntity.status(HttpStatus.LOCKED).body("Has supertado el limite de 3 fallos. La cuenta está bloqueada. Comuniquese con un administrador");
             }
@@ -97,6 +98,12 @@ public class AuthController {
         // Restablecer los intentos fallidos si el inicio de sesión es exitoso
         Usuario usuario = usuarioRepository.findByCorreo(authRequest.getCorreo())
             .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        if (usuario.isBloqueado()) {
+            
+                registrarInicioSesion(authRequest.getCorreo(),"FALLIDO", "La cuenta se encuentra bloqueada", request);
+
+                return ResponseEntity.status(HttpStatus.LOCKED).body("Has supertado el limite de 3 fallos. La cuenta está bloqueada. Comuniquese con un administrador");
+            }
         if (usuario.getIntentosFallidos()>0) {
             usuario.setIntentosFallidos(0);
             usuarioRepository.save(usuario);

@@ -6,6 +6,7 @@ package controller;
 
 import com.proyecto01.proyecto01.exceptions.ResourceNotFoundException;
 import dao.UsuarioRepository;
+import enums.TipoUsuario;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-  /*  
+    
     @PostMapping("/crear")
     @PreAuthorize("hasRole('ADMIN') or hasRole('SUPERADMIN')")
     public ResponseEntity<?> crearUsuario(@Valid @RequestBody Usuario usuario) {
@@ -46,14 +47,17 @@ public class UsuarioController {
         
         validarContrasena(usuario.getContrasena());
 
-        // Codificar contraseña antes de guardar
         usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().stream().anyMatch(role -> role.getAuthority().equals("ROLE_ADMIN")) && usuario.getTipoUsuario().toString().equals("SUPERADMIN")) {
+            return ResponseEntity.badRequest().body("ERROR: un usuario ADMIN no puede crear un SUPERADMIN");
+        }
 
         Usuario nuevoUsuario = usuarioRepository.save(usuario);
         return ResponseEntity.ok(nuevoUsuario);
     }
-*/
-    @PostMapping("/registro")
+
+   @PostMapping("/registro")
    public ResponseEntity<?> registrarUsuario(@Valid @RequestBody Usuario usuario) {
         // Verificación de correo duplicado
 //        if (usuario.getCorreo().trim().equals("") || usuario.getCorreo().isEmpty()) {
@@ -72,6 +76,7 @@ public class UsuarioController {
         usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         usuario.setBloqueado(false);
         usuario.setIntentosFallidos(0);
+  
         
         
         
